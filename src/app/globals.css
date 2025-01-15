@@ -13,6 +13,17 @@
     --foreground: #ededed;
   }
 }
+@font-face {
+  font-family: 'Calistoga';
+  font-weight: 400;
+  src: url('/fonts/Calistoga-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Alike';
+  font-weight: 400;
+  src: url('/fonts/Alike-Regular.ttf') format('truetype');
+}
 
 body {
   color: var(--foreground);
