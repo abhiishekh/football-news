@@ -54,11 +54,16 @@ const SubNav = () => {
         </Link>
         <div className='absolute z-10 left-20 hidden mt-[2px] w-36 h-52 overflow-hidden bg-[#FFFFFFE0] border border-gray-300 rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg group-hover:block py-2'>
           <ul>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Premier League</li>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>La Liga</li>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Bundesliga</li>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Ligue 1</li>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Other International Competitions</li>
+            <Link href='/internationsteams'>
+            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Premier League</li></Link>
+            <Link href='/internationsteams/laliga'>
+            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>La Liga</li></Link>
+            <Link href='/internationsteams/bundesliga'>
+            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Bundesliga</li></Link>
+            <Link href="/internationsteams/league1">
+            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Ligue 1</li></Link>
+            <Link href='/internationsteams/otherinternational'>
+            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Other International Competitions</li></Link>
           </ul>
         </div>
       </div>

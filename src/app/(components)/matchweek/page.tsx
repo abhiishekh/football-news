@@ -9,66 +9,66 @@ const MatchweekCard = () => {
         </div>
         <h2>Matchweek</h2>
       </div>
-      <p className="time p-3">All times shown are post local time</p>
+      <p className="time p-3 text-sm">All times shown are post local time</p>
       <div className="date">
-        <h3>Saturday 10 October</h3>
+        <h3 className='text-sm'>Saturday 10 October</h3>
       </div>
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">AVL</div>
         <div className="score">0-2</div>
         <div className="team">CHE</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">CHE</div>
         <div className="score">0-2</div>
         <div className="team">CHE</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">CHE</div>
         <div className="score">7-0</div>
         <div className="team">CHE</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">CHE</div>
         <div className="score">0-2</div>
         <div className="team">AVL</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">AVL</div>
         <div className="score">0-2</div>
         <div className="team">CHE</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">AVL</div>
         <div className="score">0-2</div>
         <div className="team">AVL</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">CHE</div>
         <div className="score">0-2</div>
         <div className="team">CHE</div>
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">CHE</div>
         <div className="score">0-3</div>
         <div className="team">AV</div> 
       </div>
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
-      <div className=" flex justify-between px-12 gap-6">
+      <div className=" flex justify-between px-12 gap-6 text-xs">
         <div className="team">AVL</div>
         <div className="score">1-1</div>
         <div className="team">CHE</div>
@@ -76,7 +76,7 @@ const MatchweekCard = () => {
       <hr className='w-full h-[2px] bg-gray-400 p-0'/>
 
       <div className="footer">
-        <p>All matches are subject to change</p>
+        <p className='p-2 text-sm'>All matches are subject to change</p>
       </div>
     </div>
   );

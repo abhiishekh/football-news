@@ -3,7 +3,7 @@
 import { IoMdShare } from "react-icons/io";
 
 interface dataType {
-  image: string;
+  image: string | any;
   description: string;
 }
 
