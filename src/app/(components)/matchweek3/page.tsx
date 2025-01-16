@@ -1,10 +1,17 @@
 import React from 'react'
 import verticleimg from '@/app/assets/images/internationalterms/premierleauge/verticleimg.png'
-const Matchweek3 = () => {
+
+interface DATA{
+  color:string;
+
+}
+
+
+const Matchweek3 = ({color}:DATA) => {
   return (
     <div className="w-full bg-gradient-to-r from-[#FFFFFF] to-[#79CFFF] rounded-lg flex flex-col gap-1 items-center overflow-hidden mt-5 sm:mt-0">
-    <div className="w-full flex  gap-4 bg-purple-800 p-4 text-white items-center">
-   <h2>Featured player</h2>
+    <div className={`w-full flex  gap-4 p-4 text-white items-center`} style={{ backgroundColor: color }}>
+   <h2>Featured Player</h2>
  </div>
 
  <div className='w-full h-[500px] flex'>

@@ -5,20 +5,19 @@ import Imagecard2 from '@/app/(components)/imagecard2/page';
 import { page1 } from '@/app/data/premierleauge';
 import news1 from '@/app/assets/images/internationalterms/premierleauge/news1.jpeg';
 import data from '@/app/data/newsdata2';
-
+import Page2 from './page2/page';
+import Page3 from './page3/page';
+import Page4 from './page4/page';
 import ImageCard from '@/app/(components)/imagecard/page';
-import Page2 from '../premierleauge/page2/page';
-import Page3 from '../premierleauge/page3/page';
-import Page4 from '../premierleauge/page4/page';
-
-const League1 = () => {
+const PremierLeauge = () => {
   return (
     <>
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-10 text-black'>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black'>
+      <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
       <div className="w-full h-auto bg-[#37003C] text-white">
         <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">
           <Image src={logo} alt="logo" width={40} height={12} />
-          <h1>Leauge1</h1>
+          <h1>Premier Leauge</h1>
         </div>
       </div>
       <div className="px-2 sm:px-24 w-full h-auto flex justify-center gap-2 sm:gap-20 my-5">
@@ -60,4 +59,4 @@ const League1 = () => {
   );
 };
 
-export default League1;
+export default PremierLeauge;

@@ -1,15 +1,18 @@
 
-import logo from '@/app/assets/images/internationalterms/premierleauge/premierleaugelogo.png'
 import React from 'react'
-
-const Matchweek2 = () => {
+interface DATA{
+    color:string;
+    heading:string;
+    logo?:string | any;
+  }
+const Matchweek2 = ({logo, color, heading}:DATA) => {
     return (
         <div className="w-full bg-gradient-to-r from-[#FFFFFF] to-[#79CFFF] rounded-lg flex flex-col gap-1 items-center overflow-hidden">
-            <div className="w-full flex  gap-4 bg-purple-800 p-2 text-white items-center">
+            <div className={`w-full flex  gap-4 p-2 text-white items-center`} style={{ backgroundColor: color }}>
                 <div className='w-8 h-8 '>
                     <img src={logo.src} alt="Logo" className='w-full h-full' />
                 </div>
-                <h1 className='text-xl'>Primeir league</h1>
+                <h1 className='text-xl'>{heading}</h1>
             </div>
 
             <div className='p-2 flex flex-col w-full '>

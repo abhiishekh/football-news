@@ -16,7 +16,7 @@ const Page4 = () => {
             <div className='w-full sm:w-[75%]  flex flex-wrap gap-6'>
                 <div className='w-full gap-3 flex flex-wrap justify-center'>
                     {page2L.map((item, index) => (
-                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60 h-44'>
+                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60 sm:h-44'>
                             <Imagecard2
                                 // key={index}
                                 image={item.image}
@@ -26,7 +26,7 @@ const Page4 = () => {
                         
                     ))}
                     {page2L.map((item, index) => (
-                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60  h-44'>
+                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60  sm:h-44'>
                             <Imagecard2
                                 // key={index}
                                 image={item.image}
@@ -36,7 +36,7 @@ const Page4 = () => {
                         
                     ))}
                     {page2L.map((item, index) => (
-                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60  h-44'>
+                        <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60  sm:h-44'>
                             <Imagecard2
                                 // key={index}
                                 image={item.image}
@@ -50,7 +50,8 @@ const Page4 = () => {
             </div>
             <div className='w-full sm:w-[24%] h-full sm:h-full flex flex-col items-center '>
             <div className='w-full sm:h-screen flex items-center '>
-                <Matchweek3 />
+                <Matchweek3
+                color='purple' />
             </div>
             </div>
             </div>

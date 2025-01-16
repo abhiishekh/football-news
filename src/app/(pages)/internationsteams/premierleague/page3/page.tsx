@@ -1,6 +1,7 @@
 import Imagecard2 from '@/app/(components)/imagecard2/page'
 import Matchweek2 from '@/app/(components)/matchweek2/page'
 import { page2L, page2M } from '@/app/data/premierleauge'
+import logo from '@/app/assets/images/internationalterms/premierleauge/premierleaugelogo.png'
 
 import React from 'react'
 
@@ -11,7 +12,11 @@ const Page3 = () => {
             {/* //left  */}
             <div className='w-full sm:w-[24%] h-full sm:h-full flex flex-col items-center '>
             <div className='w-full sm:h-screen flex items-center '>
-                <Matchweek2 />
+                <Matchweek2
+                color='purple'
+                heading='Premeir League'
+                logo={logo}
+                />
             </div>
             </div>
             {/* //middle  */}

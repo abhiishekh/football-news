@@ -1,5 +1,5 @@
 import React from 'react'
-import PremierLeauge from './premierleauge/page'
+import PremierLeauge from './premierleague/page'
 
 const InternationalTeams = () => {
   return (

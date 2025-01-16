@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from '@/app/assets/images/internationalterms/premierleauge/premierleaugelogo.png';
 import Image from 'next/image';
 import Imagecard2 from '@/app/(components)/imagecard2/page';
 import { page1 } from '@/app/data/premierleauge';
 import news1 from '@/app/assets/images/internationalterms/premierleauge/news1.jpeg';
 import data from '@/app/data/newsdata2';
-
+import laligalogo from '@/app/assets/images/internationalterms/laligalogo.png'
 import ImageCard from '@/app/(components)/imagecard/page';
-import Page2 from '../premierleauge/page2/page';
-import Page3 from '../premierleauge/page3/page';
-import Page4 from '../premierleauge/page4/page';
+import Page2 from '../premierleague/page2/page';
+import Page3 from '../premierleague/page3/page';
+import Page4 from '../premierleague/page4/page';
 
 const LaLiga = () => {
   return (
     <>
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-10 text-black'>
-      <div className="w-full h-auto bg-[#37003C] text-white">
-        <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">
-          <Image src={logo} alt="logo" width={40} height={12} />
-          <h1>La Liga</h1>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black'>
+    <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
+      <div className="w-full bg-white text-black">
+        <div className="px-2 sm:px-24  sm:py-5 py-2 text-3xl flex gap-4 items-center">
+          <Image src={laligalogo} alt="logo" width={60} height={60} />
+          <h1 className='text-red-600'>La Liga</h1>
         </div>
       </div>
       <div className="px-2 sm:px-24 w-full h-auto flex justify-center gap-2 sm:gap-20 my-5">

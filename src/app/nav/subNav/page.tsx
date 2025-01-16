@@ -1,103 +1,24 @@
-"use client";
-
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+"use client"
 import React from 'react';
-import { FaCaretDown } from "react-icons/fa";
+import { usePathname } from 'next/navigation';
+import NavButton from '@/app/(components)/navbutton/page';
+import DropdownMenu from '@/app/(components)/dropdown/page';
+import { FaExchangeAlt, FaGlobe, FaHome, FaInfoCircle, FaNewspaper, FaStore } from 'react-icons/fa';
+
 
 const SubNav = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
-    <div className='font-alike bg-gradient-to-r from-[#FF6700] to-[#B64900] w-full h-auto py-2 px-4 sm:px-24 flex flex-wrap justify-between items-center text-black'>
-      {/* Home */}
-      <Link href='/'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/' ? 'text-white' : ''}`}
-        >
-          Home
-        </li>
-      </Link>
-      {/* Latest News */}
-      <Link href='/news'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/news' ? 'text-white' : ''}`}
-        >
-          Latest News
-        </li>
-      </Link>
-      {/* Transfer Market */}
-      <Link href='/transfermarket'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/transfermarket' ? 'text-white' : ''}`}
-        >
-          Transfer Market
-        </li>
-      </Link>
-      {/* Series A */}
-      <Link href='/seriesA'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/seriesA' ? 'text-white' : ''}`}
-        >
-          Series A
-        </li>
-      </Link>
-      {/* International Teams */}
-      <div className='relative group'>
-        <Link href='/internationsteams'>
-          <li
-            className={`list-none text-sm capitalize flex items-center gap-1 cursor-pointer ${pathname === '/internationsteams' ? 'text-white' : ''}`}
-          >
-            International Teams
-            <FaCaretDown className='text-xs' />
-          </li>
-        </Link>
-        <div className='absolute z-10 left-20 hidden mt-[2px] w-36 h-52 overflow-hidden bg-[#FFFFFFE0] border border-gray-300 rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg group-hover:block py-2'>
-          <ul>
-            <Link href='/internationsteams'>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Premier League</li></Link>
-            <Link href='/internationsteams/laliga'>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>La Liga</li></Link>
-            <Link href='/internationsteams/bundesliga'>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Bundesliga</li></Link>
-            <Link href="/internationsteams/league1">
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Ligue 1</li></Link>
-            <Link href='/internationsteams/otherinternational'>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Other International Competitions</li></Link>
-          </ul>
-        </div>
-      </div>
-      {/* Fantasy Football */}
-      <Link href='/fantasy-football'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/fantasy-football' ? 'text-white' : ''}`}
-        >
-          Fantasy Football
-        </li>
-      </Link>
-      {/* Shop */}
-      <div className='relative group'>
-        <li
-          className={`list-none text-sm capitalize flex items-center gap-1 cursor-pointer ${pathname === '/shop' ? 'text-white' : ''}`}
-        >
-          Shop
-          <FaCaretDown className='text-xs' />
-        </li>
-        <div className='absolute z-10 left-5 hidden mt-[2px] w-36 h-52 overflow-hidden bg-[#FFFFFFE0] border border-gray-300 rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg group-hover:block py-2'>
-          <ul>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>2024/2025 Jerseys</li>
-            <li className='px-4 pb-1 text-xs hover:bg-gray-200 text-black capitalize'>Serie A International</li>
-          </ul>
-        </div>
-      </div>
-      {/* About */}
-      <Link href='/about'>
-        <li
-          className={`list-none text-sm capitalize cursor-pointer ${pathname === '/about' ? 'text-white' : ''}`}
-        >
-          About
-        </li>
-      </Link>
+    <div className="font-alike bg-gradient-to-r from-[#FF6700] to-[#B64900] w-full h-auto py-2 px-4 sm:px-24 hidden sm:flex flex-wrap justify-between items-center text-black">
+      <NavButton href="/" active={pathname === '/'} icon={<FaHome />}>Home</NavButton>
+      <NavButton href="/news" active={pathname === '/news'}icon={<FaNewspaper />}>Latest News</NavButton>
+      <NavButton href="/transfermarket" active={pathname === '/transfermarket'} icon={<FaExchangeAlt />}>Transfer Market</NavButton>
+      <NavButton href="/seriesA" active={pathname === '/seriesA'} icon={<FaGlobe />}>Series A</NavButton>
+      <DropdownMenu title="International Teams" options={['Premier League', 'La Liga', 'Bundesliga', 'Ligue 1', 'Other International Competitions']} linkPrefix="/internationsteams" />
+      <NavButton href="/fantasy-football" active={pathname === '/fantasy-football'} icon={<FaGlobe />}>Fantasy Football</NavButton>
+      <DropdownMenu title="Shop" options={['2024/2025 Jerseys', 'Serie A International']} linkPrefix="/shop" icon={<FaStore />} />
+      <NavButton href="/about" active={pathname === '/about'} icon={<FaInfoCircle />}>About</NavButton>
     </div>
   );
 };
