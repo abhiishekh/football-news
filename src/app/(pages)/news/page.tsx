@@ -7,34 +7,12 @@ import { IoMdShare } from "react-icons/io";
 import data1 from '@/app/data/newsdata1'
 import data2 from '@/app/data/newsdata2'
 import data3 from '@/app/data/newsdata3'
-import { useEffect } from 'react';
-import axios from 'axios';
+
 
 const apiKey = process.env.NEXT_PUBLIC_NEWS_API;
 
 export default function News() {
-    useEffect(()=>{
-        const fetchData = async()=>{
-            const response = await axios.get('https://newsapi.org/v2/everything',{
-                params: {
-                    q: 'football', // Broaden this if no data is found
-                  //   from:currentDate,
-                  //   to:cr,
-                    apiKey: apiKey,
-                },
-            });
-            if(response){
 
-                console.log(response)
-            }else{
-
-                console.log("data not found ")
-                return
-            }
-        }
-
-        fetchData()
-    },[])
     return (
         <>
   {/* //section 1  */}
