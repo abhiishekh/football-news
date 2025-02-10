@@ -13,7 +13,7 @@ import Page4 from '../premierleague/page4/page';
 const LaLiga = () => {
   return (
     <>
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black'>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>
     <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
       <div className="w-full bg-white text-black">
         <div className="px-2 sm:px-24  sm:py-5 py-2 text-3xl flex gap-4 items-center">

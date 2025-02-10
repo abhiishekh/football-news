@@ -9,9 +9,9 @@ interface dataType {
 
 export default function ImageCard({ image, description }: dataType) {
   return (
-    <div className="w-36 sm:w-56 h-52 flex flex-col gap-1 sm:gap-3">
+    <div className="w-full sm:w-56 h-52 flex flex-col gap-1 sm:gap-3">
       <div
-        className="h-24 sm:h-40 w-full rounded-xl overflow-hidden shadow-lg shadow-[#00000040] flex-shrink-0"
+        className="h-36 sm:h-40 w-full rounded-xl overflow-hidden shadow-lg shadow-[#00000040] flex-shrink-0"
         style={{
           backgroundImage: `url(${image})`,
           backgroundPosition: "center",

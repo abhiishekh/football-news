@@ -17,7 +17,7 @@ const Footer = () => {
                 <div>
                     <h1 className='text-3xl sm:text-5xl font-calistoga tracking-[.7rem] mb-2 '>GoalMania</h1>
                     <p className='text-xs text-black'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam at auctor leo, vitae dapibus sapien. Etiam vehicula et lacus nec suscipit. Suspendisse tempor id lectus ut interdum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam id aliquam magna. Donec in elit libero. Nullam aliquet dui elit, pellentesque ullamcorper sapien molestie et....</p>
-                    <button className='text-sm text-black p-2 bg-[#FFFFFFB2] rounded-full my-5 cursor-pointer'>Read more</button>
+                    <button className='text-sm text-black px-4 py-2 bg-[#FFFFFFB2] rounded-full my-5 cursor-pointer'>Read more</button>
                 </div>
             </div>
             <div>

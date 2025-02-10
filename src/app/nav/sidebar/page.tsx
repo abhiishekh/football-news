@@ -2,6 +2,8 @@
 
 import DropdownMenu from '@/app/(components)/dropdown/page';
 import NavButton from '@/app/(components)/navbutton/page';
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import { FaCaretDown, FaHome, FaNewspaper, FaExchangeAlt, FaGlobe, FaStore, FaInfoCircle, FaSignInAlt } from 'react-icons/fa';
@@ -32,22 +34,27 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   }, [toggleSidebar]);
 
   const pathname = usePathname();
+  const {isSignedIn} = useUser()
 
   return (
     <div
       ref={sidebarRef}
-      className={`z-10 fixed top-0 left-0 h-full w-64 bg-gradient-to-r from-[#FF6700]/80 to-[#B64900]/80 backdrop-blur-md text-black transform transition-all duration-300 ease-in-out ${
+      className={`z-10 fixed top-[63px] left-0 h-full w-64 bg-gradient-to-b from-[##1D4E89]/80 to-[#0b265d]/80 backdrop-blur-md transform transition-all duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
       <div className="flex flex-col items-start py-6 px-4 gap-3">
+      <div className=' flex gap-3 '>
+        profile
+        {isSignedIn ? <UserButton/>:''}
+      </div>
         {/* Home */}
         <NavButton href="/" active={pathname === '/'} icon={<FaHome />}>
           Home
         </NavButton>
 
         {/* Latest News */}
-        <NavButton href="/news" active={pathname === '/news'} icon={<FaNewspaper />}>
+        <NavButton href="/latestnews" active={pathname === '/news'} icon={<FaNewspaper />}>
           Latest News
         </NavButton>
 
@@ -75,12 +82,15 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         </NavButton>
 
         {/* Shop Dropdown */}
+      <Link href={'/shop'}>
+
         <DropdownMenu
           title="Shop"
           options={['2024/2025 Jerseys', 'Serie A International']}
           linkPrefix="/shop"
           icon={<FaStore />}
         />
+      </Link>
 
         {/* About */}
         <NavButton href="/about" active={pathname === '/about'} icon={<FaInfoCircle />}>
@@ -99,9 +109,15 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
         />
 
         {/* Login Button */}
-        <button className="px-4 py-2 bg-white/80 backdrop-blur-lg rounded-full capitalize flex items-center gap-1">
-          <FaSignInAlt /> Login
+        {
+          isSignedIn ? '' : <>
+        
+        <button
+        className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1">
+          <FaSignInAlt /> <SignInButton/>
         </button>
+          </>
+        }
       </div>
     </div>
   );

@@ -14,14 +14,11 @@ interface DropdownMenuProps {
 const DropdownMenu = ({ title, options, linkPrefix, icon }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Toggle dropdown visibility
   const toggleDropdown = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent the click from propagating to the document
+    e.stopPropagation(); 
     setIsOpen(!isOpen);
   };
 
-  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -38,13 +35,13 @@ const DropdownMenu = ({ title, options, linkPrefix, icon }: DropdownMenuProps) =
 
   return (
     <div ref={dropdownRef} className="relative">
-      <button
+      <div
         className="px-4 py-2 bg-white/10 backdrop-blur-lg rounded-full flex items-center gap-1 capitalize"
         onClick={toggleDropdown}
       >
-        {icon && <span className="mr-2">{icon}</span>} {/* Optional icon */}
+        {icon && <span className="mr-2">{icon}</span>} 
         {title} <FaCaretDown className="text-xs" />
-      </button>
+      </div>
       {isOpen && (
         <div className="absolute z-10 left-0 mt-[2px] w-36 py-2 overflow-hidden bg-[#FFFFFFE0] border border-gray-300 rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-lg">
           <ul>

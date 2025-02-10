@@ -12,7 +12,7 @@ import ImageCard from '@/app/(components)/imagecard/page';
 const PremierLeauge = () => {
   return (
     <>
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black'>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>
       <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
       <div className="w-full h-auto bg-[#37003C] text-white">
         <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">

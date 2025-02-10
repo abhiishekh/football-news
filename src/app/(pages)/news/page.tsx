@@ -7,21 +7,45 @@ import { IoMdShare } from "react-icons/io";
 import data1 from '@/app/data/newsdata1'
 import data2 from '@/app/data/newsdata2'
 import data3 from '@/app/data/newsdata3'
+import { useEffect } from 'react';
+import axios from 'axios';
 
+const apiKey = process.env.NEXT_PUBLIC_NEWS_API;
 
 export default function News() {
+    useEffect(()=>{
+        const fetchData = async()=>{
+            const response = await axios.get('https://newsapi.org/v2/everything',{
+                params: {
+                    q: 'football', // Broaden this if no data is found
+                  //   from:currentDate,
+                  //   to:cr,
+                    apiKey: apiKey,
+                },
+            });
+            if(response){
+
+                console.log(response)
+            }else{
+
+                console.log("data not found ")
+                return
+            }
+        }
+
+        fetchData()
+    },[])
     return (
         <>
-
-        {/* //section 1  */}
-            <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24 py-10 text-black">
+  {/* //section 1  */}
+            <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24 py-10 text-black ">
                 <h1 className="text-4xl font-semibold font-serif">Latest News</h1>
                 <div>
                     <div className="flex w-full py-2 justify-end items-center">
                         <p className="text-blue-600 uppercase">See all</p>
                     </div>
-                    <div className="flex w-full  justify-between items-start">
-                        <div className="w-[55%] sm:w-[45%]">
+                    <div className="flex w-full  justify-between items-start gap-2">
+                        <div className="sm:w-[45%] w-[65%]">
                             <img src={imageText1.src} alt="image" className='w-full rounded-xl' />
                             <div>
                                 <h3 className='text-3xl gap-5  sm:mt-5 flex items-start justify-between pr-4'>Upcoming Derbies Set to
@@ -31,7 +55,7 @@ export default function News() {
                                 </p>
                             </div>
                         </div>
-                        <div className='w[45%] sm:w-[55%] h-full flex sm:gap-16 flex-wrap justify-end items-center '>
+                        <div className='w-[45%] h-full flex sm:gap-16 flex-wrap justify-start items-center'>
                             {
                                 data1.map((items, index) => (
                                     <ImageCard
@@ -51,7 +75,7 @@ export default function News() {
                     <div className="flex w-full py-2 justify-end items-center">
                         <p className="text-blue-600 uppercase">See all</p>
                     </div>
-                    <div className="flex w-full  justify-between items-start">
+                    <div className="flex w-full  justify-between items-start gap-2">
 
                         <div className='w-[45%] h-full flex sm:gap-16 flex-wrap justify-start items-center'>
                             {
@@ -64,7 +88,7 @@ export default function News() {
                                 ))
                             }
                         </div>
-                        <div className="sm:w-[45%] w-[55%]">
+                        <div className="sm:w-[45%] w-[65%]">
                             <img src={imageText2.src} alt="image" className='w-full rounded-xl' />
                             <div>
                                 <h3 className='text-3xl   sm:mt-5 flex items-start justify-between pr-4'>Young Stars Making Waves
@@ -92,6 +116,7 @@ export default function News() {
                             }
                         </div>
             </div>
+      
         </>
     )
 }
