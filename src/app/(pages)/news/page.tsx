@@ -9,7 +9,7 @@ import data2 from '@/app/data/newsdata2'
 import data3 from '@/app/data/newsdata3'
 
 
-const apiKey = process.env.NEXT_PUBLIC_NEWS_API;
+// const apiKey = process.env.NEXT_PUBLIC_NEWS_API;
 
 export default function News() {
 
