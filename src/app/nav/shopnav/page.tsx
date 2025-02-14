@@ -7,7 +7,7 @@ const ShopNav = () => {
     return (
         <div>
 
-        <div className='w-full flex justify-between py-2 sm:py-5 items-center'>
+        <div className='w-full xl:w-[1100px] flex justify-between py-2 sm:py-5 items-center mx-auto'>
             <h1 className='text-4xl tracking-widest'>Shop</h1>
 
             <div className="flex  items-center justify-center relative">

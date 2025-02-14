@@ -2,11 +2,11 @@
 
 import DropdownMenu from '@/app/(components)/dropdown/page';
 import NavButton from '@/app/(components)/navbutton/page';
-import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import { FaCaretDown, FaHome, FaNewspaper, FaExchangeAlt, FaGlobe, FaStore, FaInfoCircle, FaSignInAlt } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -18,6 +18,8 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const [isInternationalTeamsOpen, setIsInternationalTeamsOpen] = useState(false);
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,8 +35,19 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     };
   }, [toggleSidebar]);
 
+  useEffect(() => {
+    // Check if token exists in cookies (or local storage)
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='));
+    setIsAuthenticated(!!token);
+  }, []);
+
   const pathname = usePathname();
-  const {isSignedIn} = useUser()
+
+  const handleSignOut = () => {
+    document.cookie = 'token=; Max-Age=0; path=/'; // Clear the token cookie
+    setIsAuthenticated(false); // Update state
+    router.push('/signin'); // Redirect to sign-in page
+  };
 
   return (
     <div
@@ -44,26 +57,26 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
       }`}
     >
       <div className="flex flex-col items-start py-6 px-4 gap-3">
-      <div className=' flex gap-3 '>
-        profile
-        {isSignedIn ? <UserButton/>:''}
-      </div>
-        {/* Home */}
+        <div className="flex gap-3">
+          {/* Display user profile if authenticated */}
+          {isAuthenticated ? (
+            <div>Profile</div> // Replace with a profile view or button for logged-in users
+          ) : null}
+        </div>
+
+        {/* Navigation buttons */}
         <NavButton href="/" active={pathname === '/'} icon={<FaHome />}>
           Home
         </NavButton>
 
-        {/* Latest News */}
         <NavButton href="/latestnews" active={pathname === '/news'} icon={<FaNewspaper />}>
           Latest News
         </NavButton>
 
-        {/* Transfer Market */}
         <NavButton href="/transfermarket" active={pathname === '/transfermarket'} icon={<FaExchangeAlt />}>
           Transfer Market
         </NavButton>
 
-        {/* Series A */}
         <NavButton href="/seriesA" active={pathname === '/seriesA'} icon={<FaGlobe />}>
           Series A
         </NavButton>
@@ -73,51 +86,52 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           title="International Teams"
           options={['Premier League', 'La Liga', 'Bundesliga', 'Ligue 1', 'Other International Competitions']}
           linkPrefix="/internationsteams"
-          // icon={<FaCaretDown />}
         />
 
-        {/* Fantasy Football */}
         <NavButton href="/fantasy-football" active={pathname === '/fantasy-football'} icon={<FaGlobe />}>
           Fantasy Football
         </NavButton>
 
         {/* Shop Dropdown */}
-      <Link href={'/shop'}>
+        <Link href={'/shop'}>
+          <DropdownMenu
+            title="Shop"
+            options={['2024/2025 Jerseys', 'Serie A International']}
+            linkPrefix="/shop"
+            icon={<FaStore />}
+          />
+        </Link>
 
-        <DropdownMenu
-          title="Shop"
-          options={['2024/2025 Jerseys', 'Serie A International']}
-          linkPrefix="/shop"
-          icon={<FaStore />}
-        />
-      </Link>
-
-        {/* About */}
         <NavButton href="/about" active={pathname === '/about'} icon={<FaInfoCircle />}>
           About
         </NavButton>
       </div>
 
-      {/* Login section and language dropdown */}
+      {/* Language dropdown and Login/Sign Out button */}
       <div className="flex gap-1 sm:gap-10 items-center px-2">
-        {/* Language Dropdown */}
         <DropdownMenu
           title="Language"
           options={['English', 'French', 'German', 'Italian', 'Portuguese']}
           linkPrefix="/"
-          // icon={<FaCaretDown />}
         />
 
-        {/* Login Button */}
-        {
-          isSignedIn ? '' : <>
-        
-        <button
-        className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1">
-          <FaSignInAlt /> <SignInButton/>
-        </button>
-          </>
-        }
+        {/* If user is not authenticated, show sign-in button */}
+        {!isAuthenticated ? (
+          <button
+            onClick={() => router.push('/auth/signin')} // Navigate to the custom sign-in page
+            className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1"
+          >
+            <FaSignInAlt /> Sign In
+          </button>
+        ) : (
+          // If authenticated, show sign-out button
+          <button
+            onClick={handleSignOut}
+            className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1"
+          >
+            Sign Out
+          </button>
+        )}
       </div>
     </div>
   );

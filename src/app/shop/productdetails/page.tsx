@@ -3,6 +3,7 @@ import productimage from '@/app/assets/images/shop/jersey/jersey1.jpeg'
 import { FaHeart } from 'react-icons/fa'
 import { FaCodeCompare, FaScaleBalanced } from 'react-icons/fa6'
 import ProductSpecs from '@/app/(components)/productspecs/page'
+import Link from 'next/link'
 
 const ProductDetails = () => {
   return (
@@ -58,7 +59,9 @@ const ProductDetails = () => {
 
             <p className='px-2 py-1 text-center'>+</p>
           </div>
+          <Link href={'/shop/cart'}>
           <button className='px-4 py-2 rounded-full capitalize bg-orange-500 text-white font-bold'>add to cart</button>
+          </Link> 
         </div>
 
         {/* //compate, wishlist , size chart  */}

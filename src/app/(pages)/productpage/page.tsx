@@ -1,22 +1,54 @@
 "use client"
-import React, { useState } from 'react';
-import data from '@/app/data/productdata';
+import React, { useEffect, useState } from 'react';
+// import data from '@/app/data/productdata';
 import ProductCard from '@/app/(components)/productCard/page';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Link from 'next/link';
+import axios from 'axios';
+
+interface Product {
+  productId: string;
+  title: string;
+  description: string;
+  price: number;
+  gender: string;
+  child: string;
+  category: string;
+  size: string;
+  stocks: number;
+  images: string[]; 
+}
 
 const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
   const productsPerPage = 8; 
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = data.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber: React.SetStateAction<number | any>) => setCurrentPage(pageNumber);
 
-  const totalPages = Math.ceil(data.length / productsPerPage);
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("/api/products");
+        setProducts(response.data);
+        console.log(response.data.images)
+      } catch (err) {
+        setError("Failed to load products.");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    fetchProducts();
+  }, []);
   const generatePagination = () => {
     const pages = [];
 
@@ -48,19 +80,30 @@ const ProductPage = () => {
     return pages;
   };
 
+
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+
   return (
     <div className='w-full min-h-screen flex flex-col items-center'>
       <div className='w-full min-h-screen flex gap-6 flex-wrap justify-center py-6'>
         {currentProducts.map((item, index) => (
           <div key={index} className='w-full sm:w-60'>
-            <Link href={'/shop/productdetails'}>
+            
             <ProductCard
-              image={item.image}
+            productId={item.productId}
+              images={item.images}
               title={item.title}
               category={item.category}
               price={item.price}
             />
-            </Link>
           </div>
         ))}
       </div>

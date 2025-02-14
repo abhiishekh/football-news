@@ -1,41 +1,20 @@
-import mongoose from "mongoose";
+// utils/dbConnect.ts
+import mongoose from 'mongoose';
 
-const MONGO_URI = process.env.MONGO_URI!;
-
-if (!MONGO_URI) {
-  throw new Error(
-    "Please define the MONGO_URI environment variable inside .env.local"
-  );
-}
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
-export async function connectToDatabase() {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: true,
-      maxPoolSize: 10,
-    };
-
-    cached.promise = mongoose
-      .connect(MONGO_URI, opts)
-      .then(() => mongoose.connection);
+const dbConnect = async () => {
+  if (mongoose.connections[0].readyState) {
+    // If already connected, return
+    return;
   }
 
   try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
+    // Establish the connection
+    await mongoose.connect(process.env.MONGODB_URI!);
+    console.log('MongoDB connected');
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
+    process.exit(1); // Exit the process with a failure code
   }
+};
 
-  return cached.conn;
-}
+export default dbConnect;
