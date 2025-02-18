@@ -11,7 +11,7 @@ import Page7 from './page7/page';
 const SeriesA = () => {
   return (
     <>
-    <div className='mt-10 sm:mt-0'>
+    <div className=' mt-10 sm:mt-0'>
 
       <Page1 />
       <Page2 />

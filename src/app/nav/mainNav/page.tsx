@@ -14,114 +14,27 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrig
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/app/context/AuthContext';
 
 const MainNav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Track authentication state
-  const [isSignUp, setIsSignUp] = useState(false); // Track which form is being shown
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const router = useRouter();
+  const [isSignup, setIsSignUp] = useState(false);
+  const { isAuthenticated, login, logout, signup } = useAuth();
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const handleSignOut = async () => {
-    try {
-      // Send signout request to the server
-      const res = await fetch('/api/auth/signout', {
-        method: 'POST',
-      });
-
-      if (res.ok) {
-        document.cookie = 'token=; Max-Age=0; path=/'; // Expire the token in cookies
-        setIsAuthenticated(false); // Update the authentication state
-        router.push('/'); // Redirect to the home page
-      } else {
-        const data = await res.json();
-        alert(data.message); // Show error message from the server
-      }
-    } catch (error) {
-      console.error('Error during sign out:', error);
-    }
-  };
-
-  const checkAuthentication = () => {
-    const token = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('token='))
-      ?.split('=')[1];
-
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  };
-
-  useEffect(() => {
-    checkAuthentication();
-  }, []);
-
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleSignIn = async () => {
+    await login(formData.email, formData.password);
   };
 
   const handleSignUp = async () => {
-    try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message);
-        return;
-      }
-
-      alert('Signup successful!');
-      setIsSignUp(false); // Close sign up dialog
-      setIsAuthenticated(true); // Update auth state
-      router.push('/'); // Redirect to home page after signup
-    } catch (error) {
-      console.error('Error during sign up:', error);
-      alert('Something went wrong during sign up');
-    }
-  };
-
-  const handleSignIn = async () => {
-    try {
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: formData.username, password: formData.password }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message);
-        return;
-      }
-
-      alert('Sign-in successful!');
-      setIsAuthenticated(true); // Update authentication state
-      router.push('/dashboard'); // Redirect to dashboard after sign in
-    } catch (error) {
-      console.error('Error during sign in:', error);
-      alert('Something went wrong during sign in');
-    }
+    await signup(formData.name, formData.email, formData.password);
   };
 
   return (
     <div className="w-full bg-gradient-to-r from-[#1D4E89] to-[#071423] text-white flex font-alike py-2 lg:py-0 fixed top-0 z-50">
-      <div className='w-full xl:w-[1150px] mx-auto px-2 xl:px-0'>
+      <div className='w-full container mx-auto px-2 xl:px-0'>
 
         <div className="w-full flex flex-wrap justify-between items-center">
           <div className="w-full lg:w-auto flex gap-2 sm:gap-10 items-center justify-between">
@@ -157,7 +70,7 @@ const MainNav = () => {
               />
               {/* Login / Sign Out button */}
               {isAuthenticated ? (
-                <div className="cursor-pointer text-white" onClick={handleSignOut}>
+                <div className="cursor-pointer text-white bg-white/10 px-4 py-2 rounded-full" onClick={logout}>
                   Sign Out
                 </div>
               ) : (
@@ -170,13 +83,13 @@ const MainNav = () => {
                       <DialogHeader>
                         <DialogTitle className='text-center text-3xl'>SignIn</DialogTitle>
                         <DialogDescription className='flex flex-col gap-4'>
-                          <Label>Username</Label>
+                          <Label>Email</Label>
                           <Input
-                            type="text"
-                            name="username"
-                            placeholder='Username'
-                            value={formData.username}
-                            onChange={handleFormChange}
+                            type="email"
+                            name="email"
+                            placeholder='email'
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           />
                           <Label>Password</Label>
                           <Input
@@ -184,7 +97,7 @@ const MainNav = () => {
                             name="password"
                             placeholder='Password'
                             value={formData.password}
-                            onChange={handleFormChange}
+                            onChange={(e)=> setFormData({...formData, password:e.target.value})}
                           />
                           <Button className='text-xl' onClick={handleSignIn}>
                             Sign In
@@ -201,19 +114,19 @@ const MainNav = () => {
                   </Dialog>
 
                   {/* SignUp Dialog */}
-                  <Dialog open={isSignUp} onOpenChange={(open) => setIsSignUp(open)}>
+                  <Dialog open={isSignup} onOpenChange={(open) => setIsSignUp(open)}>
                     <DialogTrigger></DialogTrigger>
                     <DialogContent>
                       <DialogHeader>
                         <DialogTitle className='text-center text-3xl'>Sign Up</DialogTitle>
                         <DialogDescription className='flex flex-col gap-4'>
-                          <Label>Username</Label>
+                          <Label>Name</Label>
                           <Input
                             type="text"
-                            name="username"
-                            placeholder='Username'
-                            value={formData.username}
-                            onChange={handleFormChange}
+                            name="name"
+                            placeholder='name'
+                            value={formData.name}
+                            onChange={(e) => {setFormData({...formData, name: e.target.value})}}
                           />
                           <Label>Email</Label>
                           <Input
@@ -221,7 +134,7 @@ const MainNav = () => {
                             name="email"
                             placeholder='Email'
                             value={formData.email}
-                            onChange={handleFormChange}
+                            onChange={(e)=>{setFormData({...formData, email:e.target.value})}}
                           />
                           <Label>Password</Label>
                           <Input
@@ -229,7 +142,7 @@ const MainNav = () => {
                             name="password"
                             placeholder='Password'
                             value={formData.password}
-                            onChange={handleFormChange}
+                            onChange={(e) => {setFormData({...formData, password:e.target.value})}}
                           />
                           <Button className='text-xl' onClick={handleSignUp}>
                             Sign Up

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 
 interface Product {
+  _id: string;
   productId: string;
   title: string;
   description: string;
@@ -38,7 +39,6 @@ const ProductPage = () => {
       try {
         const response = await axios.get("/api/products");
         setProducts(response.data);
-        console.log(response.data.images)
       } catch (err) {
         setError("Failed to load products.");
         console.error(err);
@@ -98,7 +98,7 @@ const ProductPage = () => {
           <div key={index} className='w-full sm:w-60'>
             
             <ProductCard
-            productId={item.productId}
+              productId={item._id}
               images={item.images}
               title={item.title}
               category={item.category}

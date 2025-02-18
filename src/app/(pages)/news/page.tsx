@@ -16,7 +16,10 @@ export default function News() {
     return (
         <>
   {/* //section 1  */}
-            <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24 py-10 text-black ">
+            <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2  py-10 text-black ">
+                <div className='container w-full h-full mx-auto'>
+
+                
                 <h1 className="text-4xl font-semibold font-serif">Latest News</h1>
                 <div>
                     <div className="flex w-full py-2 justify-end items-center">
@@ -48,7 +51,7 @@ export default function News() {
                 </div>
             </div>
             {/* // section 2  */}
-            <div className="w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24 py-10 text-black overflow-hidden">
+            <div className="container w-full min-h-screen  px-2 py-10 text-black overflow-hidden mx-auto">
                 <div className=''>
                     <div className="flex w-full py-2 justify-end items-center">
                         <p className="text-blue-600 uppercase">See all</p>
@@ -94,7 +97,7 @@ export default function News() {
                             }
                         </div>
             </div>
-      
+            </div>
         </>
     )
 }

@@ -14,8 +14,11 @@ import Page4 from '../premierleague/page4/page';
 const OtherInternational = () => {
   return (
     <>
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>\
+      <div className='container mx-auto'>
+
     <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>DATA NOT DECIDED</h1>
+      </div>
       {/* <div className="w-full h-auto bg-[#37003C] text-white">
         <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">
           <Image src={logo} alt="logo" width={40} height={12} />

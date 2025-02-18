@@ -4,7 +4,10 @@ import image2 from '@/app/assets/images/seriesA/page2/image2.jpeg'
 import image3 from '@/app/assets/images/seriesA/page2/image3.jpeg'
 const Page2 = () => {
   return (
-    <div className='font-alike w-full bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] py-10 px-2 sm:px-24 text-black'>
+    <div className='w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]'>
+
+   
+    <div className='container mx-auto font-alike w-full  py-10 px-2 sm:px-24 text-black'>
     <h1 className='text-3xl tracking-wider'>Series A</h1>
     <div className='w-full flex justify-between gap-2'>
       {/* //left  */}
@@ -44,6 +47,7 @@ const Page2 = () => {
         </div>
       </div>
     </div>
+  </div>
   </div>
   )
 }

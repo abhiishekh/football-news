@@ -12,7 +12,7 @@ const SubNav = () => {
 
   return (
     <div className="font-alike bg-gradient-to-r from-[#FF6700] to-[#B64900] w-full h-auto py-2 px-4  hidden lg:flex flex-wrap justify-between items-center text-black mt-[70px]">
-      <div className='w-full xl:w-[1150px] mx-auto px-2 xl:px-0 flex justify-between items-center'>
+      <div className='w-full container mx-auto px-2 xl:px-0 flex justify-between items-center'>
 
       <NavButton href="/" active={pathname === '/'} icon={<FaHome />}>Home</NavButton>
       <NavButton href="/news" active={pathname === '/latestnews'}icon={<FaNewspaper />}>Latest News</NavButton>

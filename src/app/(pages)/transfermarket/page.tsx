@@ -16,8 +16,9 @@ const TransferMarket = () => {
     return (
         <>
         {/* //first section */}
-        <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-10 text-black">
-            <div className="w-full sm:flex justify-center sm:justify-between px-2 sm:px-24 items-center mx-auto">
+
+        <div className=" font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-10 text-black mx-auto">
+            <div className="container w-full sm:flex justify-center sm:justify-between px-2      items-center mx-auto">
                 <h1 className="text-4xl text-center mb-2 sm:mb-0">Transfer Market</h1>
                 <div className="flex  items-center justify-center relative">
                     {/* Input Field */}
@@ -40,17 +41,17 @@ const TransferMarket = () => {
                     objectFit="cover"
                     objectPosition="top"
                 />
-                <h1 className="text-white text-4xl w-[80%] absolute bottom-10 left-4 sm:left-24">
+                <h1 className="container mx-auto text-white text-4xl w-[80%] absolute bottom-10 left-4 sm:left-24">
                     From Rumors to Reality, The Most Anticipated
                     Transfers of the Year.
                 </h1>
             </div>
-
-            <div className="flex w-full px-2 sm:px-24 justify-between my-5">
+   
+            <div className="container mx-auto flex w-full px-2 sm:px-24 justify-between my-5">
                 <h3 className="capitalize text-2xl tracking-wider">latest transfer news</h3>
                 <p className="capitalize ">all news</p>
             </div>
-            <div className="w-full px-2 sm:px-24 sm:flex justify-center sm:justify-between ">
+            <div className="container mx-auto w-full px-2  sm:flex justify-center sm:justify-between ">
                 <div className="w-full sm:w-[40%]">
                 <hr className="h-[3px] bg-[#FF6700]" />
                 <ContentText
@@ -67,7 +68,9 @@ const TransferMarket = () => {
             </div>
         </div>
         {/* second section */}
-        <div className='font-alike w-full  bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-16 sm:py-20 px-2 sm:px-24 text-black flex mx-auto'>
+        <div className="w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]">
+
+        <div className='container font-alike w-full  py-16 sm:py-20 px-2  text-black flex mx-auto'>
         <div className="w-full sm:w-[50%]"> 
         <hr className="h-[3px] bg-[#FF6700]" />
             {
@@ -93,15 +96,17 @@ const TransferMarket = () => {
                 </div>
         </div>
 
-        <hr className="hidden sm:block w-[2px] h-[100vh] mx-16 bg-[#FF6700] "/>
+        <hr className="hidden sm:block w-[2px] h-auto mx-16 bg-[#FF6700] "/>
         <div className="w-[40%] hidden sm:flex flex-col gap-4"> 
             <LatestNewsCard1/>
             <LatestNewsCard1/>
         </div>
         </div>
+        </div>
 
         {/* //third section  */}
-        <div className="font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] py-10 sm:py-20 px-2 sm:px-24 text-black flex flex-col items-center ">
+        <div className="w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]">
+        <div className="container mx-auto font-alike w-full min-h-screen py-10 sm:py-20 px-2  text-black flex flex-col items-center ">
             <h1 className="text-2xl text-center  my-5 tracking-wider">lorem lipsom</h1>
 
             <div className="w-full sm:grid grid-cols-2  gap-1 gap-x-16">
@@ -140,9 +145,12 @@ const TransferMarket = () => {
 
                </div>
         </div>
+        </div>
+
 
         {/* //forth section */}
-        <div className="font-alike w-full h-full bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  py-20 px-2 sm:px-24 text-black flex flex-col items-center">
+        <div className="w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]">
+        <div className="container mx-auto font-alike w-full h-full py-20 px-2 text-black flex flex-col items-center">
             
 
         <h1 className="text-2xl text-center  my-5 tracking-wider">lorem lipsom</h1>
@@ -155,6 +163,8 @@ const TransferMarket = () => {
         }
         </div>
         </div>
+        </div>
+
         </>
     );
 };

@@ -74,7 +74,7 @@ const Footer = () => {
                 <li className='list-none ml-2'>Terms & Conditions</li>
                 <li className='list-none ml-2'>Privacy</li>
                 <li className='list-none ml-2'>Accessibility Information</li>
-                <li className='list-none ml-2'>Accessibility Information</li>
+                <li className='list-none ml-2'>Contact Us</li>
 
             </div>
         </div>

@@ -7,6 +7,11 @@ import { usePathname } from 'next/navigation';
 import React, { useState, useEffect, useRef } from 'react';
 import { FaCaretDown, FaHome, FaNewspaper, FaExchangeAlt, FaGlobe, FaStore, FaInfoCircle, FaSignInAlt } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -18,8 +23,11 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   const [isInternationalTeamsOpen, setIsInternationalTeamsOpen] = useState(false);
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const pathname = usePathname()
   const router = useRouter();
+  const [isSignup, setIsSignUp] = useState(false);
+  const { isAuthenticated, login, logout, signup } = useAuth(); // Use the auth hook
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,19 +43,15 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
     };
   }, [toggleSidebar]);
 
-  useEffect(() => {
-    // Check if token exists in cookies (or local storage)
-    const token = document.cookie.split('; ').find(row => row.startsWith('token='));
-    setIsAuthenticated(!!token);
-  }, []);
 
-  const pathname = usePathname();
-
-  const handleSignOut = () => {
-    document.cookie = 'token=; Max-Age=0; path=/'; // Clear the token cookie
-    setIsAuthenticated(false); // Update state
-    router.push('/signin'); // Redirect to sign-in page
+  const handleSignIn = async () => {
+    await login(formData.email, formData.password);
   };
+
+  const handleSignUp = async () => {
+    await signup(formData.name, formData.email, formData.password);
+  };
+
 
   return (
     <div
@@ -114,24 +118,90 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
           options={['English', 'French', 'German', 'Italian', 'Portuguese']}
           linkPrefix="/"
         />
+  {isAuthenticated ? (
+                <div className="cursor-pointer text-white bg-white/10 px-4 py-2 rounded-full" onClick={logout}>
+                  Sign Out
+                </div>
+              ) : (
+                <div className="flex gap-4">
+                  <Dialog>
+                    <DialogTrigger className='bg-white/10 px-4 py-2 rounded-full '>
+                      SignIn
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className='text-center text-3xl'>SignIn</DialogTitle>
+                        <DialogDescription className='flex flex-col gap-4'>
+                          <Label>Email</Label>
+                          <Input
+                            type="email"
+                            name="email"
+                            placeholder='email'
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          />
+                          <Label>Password</Label>
+                          <Input
+                            type="password"
+                            name="password"
+                            placeholder='Password'
+                            value={formData.password}
+                            onChange={(e)=> setFormData({...formData, password:e.target.value})}
+                          />
+                          <Button className='text-xl' onClick={handleSignIn}>
+                            Sign In
+                          </Button>
+                          <p className='text-lg'>
+                            Don't have an account{' '}
+                            <span className='text-blue-400 cursor-pointer' onClick={() => { setIsSignUp(true); }}>
+                              Sign Up Now
+                            </span>
+                          </p>
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
 
-        {/* If user is not authenticated, show sign-in button */}
-        {!isAuthenticated ? (
-          <button
-            onClick={() => router.push('/auth/signin')} // Navigate to the custom sign-in page
-            className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1"
-          >
-            <FaSignInAlt /> Sign In
-          </button>
-        ) : (
-          // If authenticated, show sign-out button
-          <button
-            onClick={handleSignOut}
-            className="px-4 py-2 bg-white/80 text-black backdrop-blur-lg rounded-full capitalize flex items-center gap-1"
-          >
-            Sign Out
-          </button>
-        )}
+                  {/* SignUp Dialog */}
+                  <Dialog open={isSignup} onOpenChange={(open) => setIsSignUp(open)}>
+                    <DialogTrigger></DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className='text-center text-3xl'>Sign Up</DialogTitle>
+                        <DialogDescription className='flex flex-col gap-4'>
+                          <Label>Name</Label>
+                          <Input
+                            type="text"
+                            name="name"
+                            placeholder='name'
+                            value={formData.name}
+                            onChange={(e) => {setFormData({...formData, name: e.target.value})}}
+                          />
+                          <Label>Email</Label>
+                          <Input
+                            type="email"
+                            name="email"
+                            placeholder='Email'
+                            value={formData.email}
+                            onChange={(e)=>{setFormData({...formData, email:e.target.value})}}
+                          />
+                          <Label>Password</Label>
+                          <Input
+                            type="password"
+                            name="password"
+                            placeholder='Password'
+                            value={formData.password}
+                            onChange={(e) => {setFormData({...formData, password:e.target.value})}}
+                          />
+                          <Button className='text-xl' onClick={handleSignUp}>
+                            Sign Up
+                          </Button>
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
       </div>
     </div>
   );

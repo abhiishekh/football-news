@@ -28,4 +28,5 @@ const productSchema = new mongoose.Schema<ProductType>({
 // Check if the model is already compiled, otherwise compile it
 const ProductModal = mongoose.models.Product || mongoose.model("Product", productSchema);
 
+
 export default ProductModal;

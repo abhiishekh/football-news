@@ -7,7 +7,9 @@ import React from 'react'
 
 const Page3 = () => {
     return (
-        <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24  py-10 text-black sm:flex gap-2'>
+        <div className='font-alike w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] '>
+
+            <div className='container mx-auto px-2   py-10 text-black sm:flex gap-2'>
 
             {/* //left  */}
             <div className='w-full sm:w-[24%] h-full sm:h-full flex flex-col items-center '>
@@ -41,6 +43,7 @@ const Page3 = () => {
                         description={item.description}
                     />
                 ))}
+            </div>
             </div>
         </div>
     )

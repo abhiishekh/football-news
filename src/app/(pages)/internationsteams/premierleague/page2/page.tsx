@@ -5,7 +5,9 @@ import MatchweekCard from '@/app/(components)/matchweek/page'
 import logo from '@/app/assets/images/internationalterms/premierleauge/premierleaugelogo.png'
 const Page2 = () => {
   return (
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24  py-10 text-black sm:flex gap-2'>
+    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] '>
+
+        <div className='container mx-auto px-2   py-10 text-black sm:flex gap-2'>
 
         {/* //left  */}
         <div className='w-full sm:w-[24%] sm:h-48 '>
@@ -31,7 +33,7 @@ const Page2 = () => {
             }
         </div>
         {/* //right  */}
-        <div className='w-full sm:w-[24%] h-full sm:h-full flex flex-col items-center '>
+        <div className='w-full sm:w-[24%] h-full flex flex-col items-center '>
             <div className='w-full sm:h-screen flex items-center '>
 
             <MatchweekCard
@@ -40,6 +42,7 @@ const Page2 = () => {
             logo={logo}
             />
             </div>
+        </div>
         </div>
     </div>
   )

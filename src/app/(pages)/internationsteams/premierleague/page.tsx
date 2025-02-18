@@ -13,15 +13,18 @@ const PremierLeauge = () => {
   return (
     <>
     <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>
-      <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
+      <div className='container mx-auto'>
+
+      <h1 className='capitalize px-2  text-4xl my-5'>International terms</h1>
+      </div>
       <div className="w-full h-auto bg-[#37003C] text-white">
-        <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">
+        <div className="container px-2 mx-auto   py-2 sm:py-5 text-3xl flex gap-4 items-center">
           <Image src={logo} alt="logo" width={40} height={12} />
           <h1>Premier Leauge</h1>
         </div>
       </div>
-      <div className="px-2 sm:px-24 w-full h-auto flex justify-center gap-2 sm:gap-20 my-5">
-        <div className="w-[55%] h-96">
+      <div className="container mx-auto px-2  w-full h-auto flex justify-center gap-2 sm:gap-20 my-5">
+        <div className="w-full h-96">
           <Imagecard2
             title="Premier League Update"
             description="Arsenal and Tottenham are in a tight race for the top, with both teams showing impressive form. Manchester United faces challenges, with consistency in their performances."

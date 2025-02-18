@@ -15,9 +15,12 @@ const Bundesliga = () => {
   return (
     <>
     <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]  pb-10 pt-5 text-black mt-10 sm:mt-0'>
-    <h1 className='capitalize px-2 sm:px-24 text-4xl my-5'>International terms</h1>
+      <div className='container mx-auto'>
+
+    <h1 className='capitalize px-2  text-4xl my-5'>International terms</h1>
+      </div>
       <div className="w-full h-auto bg-[#CF1118] text-white">
-        <div className="px-2 sm:px-24 py-2 sm:py-5 text-3xl flex gap-4 items-center">
+        <div className="container mx-auto px-2 py-2 sm:py-5 text-3xl flex gap-4 items-center">
           <Image src={logo} alt="logo" width={80} height={40} />
           <h1>Bundesliga</h1>
         </div>

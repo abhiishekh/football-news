@@ -5,7 +5,8 @@ import ArticleCard from '@/app/(components)/articleCard/page'
 import NewsCard from '@/app/(components)/newsCard/page'
 const Page6 = () => {
   return (
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] py-10 px-2 sm:px-24 text-black'>
+  <div className='w-full h-full  bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] '>
+      <div className='container mx-auto font-alike w-full min-h-screen py-10 px-2 sm:px-24 text-black'>
         <div className='w-full flex items-center justify-between'>
             <h1 className='text-4xl'>Articles</h1>
             <p className='uppercase'>see all</p>
@@ -39,6 +40,7 @@ const Page6 = () => {
             }
         </div>
         </div>
+  </div>
   )
 }
 

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Image from "next/image";
 
 interface Product {
   title: string;
@@ -12,7 +14,7 @@ interface Product {
   category: string;
   size: string;
   stocks: number;
-  images: string[]; // Assuming images is an array of image URLs
+  images: string[];
 }
 
 export default function Product() {
@@ -25,8 +27,8 @@ export default function Product() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/products");
-        setProducts(response.data); // Assuming response.data contains the list of products
+        const response = await axios.get<Product[]>("/api/products");  // Type the response
+        setProducts(response.data);
       } catch (err) {
         setError("Failed to load products.");
         console.error(err);
@@ -48,23 +50,29 @@ export default function Product() {
 
   return (
     <div className="w-full min-h-screen">
-      <h1 className="text-3xl text-center py-5">Product List</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {products.map((product) => (
-          <div key={product.title} className="border p-4 rounded-md shadow-lg">
-            <h2 className="font-bold text-xl">{product.title}</h2>
-            <p>{product.description}</p>
-            <div className="flex flex-wrap gap-2">
-              {product.images.map((image, index) => (
-                <img key={index} src={image} alt={product.title} className="w-32 h-32 object-cover rounded-md" />
-              ))}
-            </div>
-            <p className="text-lg mt-2">${product.price}</p>
-            <p>Category: {product.category}</p>
-            <p>Size: {product.size}</p>
-            <p>Stocks: {product.stocks}</p>
-          </div>
-        ))}
+      <div className="container mx-auto border-[1px] p-2 border-black rounded-md mt-12">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Image</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead className="text-right">Stocks</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {products.map((product, index) => (
+              <TableRow key={index} className="h-12 ">
+                <TableCell className="font-medium h-4">
+                  <img src={product.images[0]} alt={product.title} className="w-12 h-12" />
+                </TableCell>
+                <TableCell>{product.title}</TableCell>
+                <TableCell>{product.price}</TableCell>
+                <TableCell className="text-right">{product.stocks}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

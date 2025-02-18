@@ -5,14 +5,17 @@ import React from 'react'
 
 const Page1 = () => {
   return (
-    <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] py-10 text-black'>
+    <div className='font-alike w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] py-10 text-black'>
+      <div className='container mx-auto'>
+
     <h1 className='text-3xl tracking-wider px-2 sm:px-24'>Series A</h1>
+      </div>
     <div className="w-full h-[422px] sm:h-[450px] px-24 bg-[url('@/app/assets/images/seriesA/seriesA.jpeg')] bg-cover bg-bottom relative">
       <h1 className='text-3xl sm:text-5xl text-white tracking-wide absolute left-2 sm:left-20 bottom-2 sm:bottom-16'>
         Historic Rivalries, Exploring the Legendary Matches that Define Serie A.
       </h1>
     </div>
-    <div className='px-2 sm:px-24 my-5 flex flex-wrap justify-center gap-8'>
+    <div className='container mx-auto px-2 sm:px-24 my-10 flex flex-wrap justify-center gap-8'>
       {
         data.map((item, index) => (
           <MatchCard

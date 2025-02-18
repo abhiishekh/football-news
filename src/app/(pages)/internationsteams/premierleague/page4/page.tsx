@@ -6,14 +6,15 @@ import React from 'react'
 
 const Page4 = () => {
     return (
-        <div className='font-alike w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] px-2 sm:px-24  py-10 text-black gap-2'>
-            <div className='w-full flex justify-between items-center'>
+    <div className='w-full h-auto bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF]'>
+            <div className='container mx-auto font-alike w-full px-2      py-10 text-black gap-2'>
+            <div className='w-full flex justify-between items-center my-5'>
                 <h1 className='text-4xl '>Latest news</h1>
                 <p className='uppercase text-xs'>see all</p>
             </div>
             <div className='w-full sm:flex justify-between'>
 
-            <div className='w-full sm:w-[75%]  flex flex-wrap gap-6'>
+            <div className='w-full sm:w-[75%]  flex flex-wrap gap-6 '>
                 <div className='w-full gap-3 flex flex-wrap justify-center'>
                     {page2L.map((item, index) => (
                         <div key={`page2L-copy1-${index}`} className='w-full sm:w-52 xl:w-60 sm:h-44'>
@@ -56,6 +57,8 @@ const Page4 = () => {
             </div>
             </div>
         </div>
+
+    </div>
     )
 }
 

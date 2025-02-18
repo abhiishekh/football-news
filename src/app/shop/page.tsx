@@ -5,7 +5,7 @@ const Shop = () => {
     <div className='font-alike w-full  min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#79CFFF] text-black mx-auto'>
       <div className=' min-h-screen mx-auto'>
         <div className="w-full h-[calc(100vh-7rem)] px-2 sm:px-24 bg-[url('@/app/assets/images/shop/shophome.jpeg')] bg-cover bg-center">
-          <div className='absolute w-1/2 bottom-0 left-16'>
+          <div className='absolute w-1/2 bottom-4 left-16'>
             <h1 className='text-4xl text-white'>
           Tradition and Modern meet for a timeless Football Look.
             </h1>

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
+import Product from "./product/page";
 
 export default function AdminPage() {
   // Set up state for form fields
@@ -161,7 +162,7 @@ export default function AdminPage() {
         </div>
 
         <Dialog>
-          <DialogTrigger className="p-6 bg-blue-400 rounded-lg text-xl font-semibold hover:bg-blue-400/90 ">
+          <DialogTrigger className="w-fit mb-12 py-2 px-4 bg-orange-400 rounded-lg text-xl font-semibold hover:bg-orange-400/90 t">
             Add a Product
           </DialogTrigger>
           <DialogContent>
@@ -274,6 +275,9 @@ export default function AdminPage() {
             </DialogHeader>
           </DialogContent>
         </Dialog>
+
+        <h1 className="text-3xl text-center">All Products </h1>
+        <Product/>
       </div>
     </div>
   );
