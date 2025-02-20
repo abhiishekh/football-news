@@ -1,6 +1,8 @@
 "use client";
 import CartProduct from '@/app/(components)/cartproduct/page';
 import { useAuth } from '@/app/context/AuthContext';
+import { useCart } from '@/app/context/CartContext';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 
@@ -28,6 +30,7 @@ const CartPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { isAuthenticated, getlength } = useAuth()
+  const { setSubtotal } = useCart()
   const getCartData = async () => {
     const token = localStorage.getItem('token');
 
@@ -120,6 +123,12 @@ const CartPage = () => {
       setError('An error occurred while removing the item from the cart.');
     }
   };
+
+  const handleSubtotal = ()=>{
+    setSubtotal(itemPrice)
+    
+  }
+
   
 
   return (
@@ -130,9 +139,11 @@ const CartPage = () => {
           <h1 className="font-bold text-xl">${itemPrice}.00</h1>
         </div>
         <div className="flex items-center justify-center sticky top-16 z-20">
-          <button className="bg-[#953FE6]/80 backdrop-blur-md hover:bg-[#953FE6] transform translate-all duration-300 px-20 py-2 rounded-full text-white font-semibold text-xl">
+          <Link href={'checkout'}>
+          <button onClick={handleSubtotal} className="bg-[#EA580C]/90 backdrop-blur-md hover:bg-[#EA580C] transform translate-all duration-300 px-20 py-2 rounded-full text-white font-semibold text-xl">
             Checkout
           </button>
+          </Link>
         </div>
 
         {/* Bill Section */}

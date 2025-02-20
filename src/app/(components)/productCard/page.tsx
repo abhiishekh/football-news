@@ -127,19 +127,19 @@ const ProductCard = ({ images, title, price, category, productId }: DATA) => {
       {/* Show Shadcn Alert for success or error messages */}
       {showAlert && success && (
         <Alert
-          className="mt-2 fixed top-4 right-4 z-50 w-fit text-green-500" // Position the alert in the right upper corner
+          className="mt-2 fixed top-4 right-4 z-50 w-fit text-green-500 flex gap-1" // Position the alert in the right upper corner
         >
-          <AlertTitle><Check /> Success</AlertTitle>
+          <AlertTitle className='flex items-center'><Check /> Success</AlertTitle>
           <AlertDescription>{success}</AlertDescription>
         </Alert>
       )}
 
       {showAlert && error && (
         <Alert
-          className="mt-2 fixed top-4 right-4 z-50 w-fit bg-white" // Position the alert in the right upper corner
+          className="mt-2 fixed top-4 right-4 z-50 w-fit bg-white flex gap-1 " // Position the alert in the right upper corner
           variant="destructive"
         >
-          <AlertTitle><X /> Error</AlertTitle>
+          <AlertTitle className='flex items-center '><X /> Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}

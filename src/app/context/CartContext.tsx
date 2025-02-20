@@ -15,6 +15,8 @@ interface CartItem {
 interface CartContextType {
   cartItems: CartItem[];
   totalPrice: number;
+  subtotal: number;
+  setSubtotal: (price: number) => void;
   getCartData: () => Promise<void>;
   removeCartItem: (itemId: string) => Promise<void>;
 }
@@ -24,6 +26,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [subtotal, setSubtotal] = useState<number>(0);
 
   const getCartData = async () => {
     const token = localStorage.getItem("token");
@@ -69,7 +72,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cartItems, totalPrice, getCartData, removeCartItem }}>
+    <CartContext.Provider value={{ subtotal, setSubtotal, cartItems, totalPrice, getCartData, removeCartItem }}>
       {children}
     </CartContext.Provider>
   );

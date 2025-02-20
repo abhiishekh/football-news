@@ -151,10 +151,10 @@ export default function AdminPage() {
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-white to-blue-300">
-      <div className="min-h-screen w-full md:w-[1100px] mx-auto py-10">
+      <div className="container px-2 mt-12 sm:mt-0 min-h-screen w-full md:w-[1100px] mx-auto py-10">
         <h1 className="font-bold text-3xl text-black">Admin page</h1>
         {/* //top */}
-        <div className="w-full flex justify-between items-center gap-4 my-12">
+        <div className="w-full flex flex-wrap justify-between items-center gap-4 my-12">
           <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Products</h1>
           <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Orders</h1>
           <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Revenue</h1>
