@@ -11,7 +11,7 @@ interface DropdownMenuProps {
   icon?: React.ReactNode; // Optional icon for the button
 }
 
-const DropdownMenu = ({ title, options, linkPrefix, icon }: DropdownMenuProps) => {
+const DropdownMenuu = ({ title, options, linkPrefix, icon }: DropdownMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toggleDropdown = (e: React.MouseEvent) => {
@@ -62,4 +62,4 @@ const DropdownMenu = ({ title, options, linkPrefix, icon }: DropdownMenuProps) =
   );
 };
 
-export default DropdownMenu;
+export default DropdownMenuu;

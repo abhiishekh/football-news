@@ -1,44 +1,29 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-interface PopulatedUser {
-  _id: mongoose.Types.ObjectId;
-  email: string;
-}
+const OrderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  orders: [
+    {
+      product: {
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+        title: String,
+        images: [String],
+        price: Number
+      },
+      address: {
+        street_address: String,
+        city: String,
+        state: String,
+        country: String,
+        postal_code: String
+      },
+      razorpayOrderId: String,
+      razorpayPaymentId: String,
+      amount: Number,
+      status: { type: String, enum: ["pending", "completed", "failed"], default: "pending" },
+      createdAt: { type: Date, default: Date.now }
+    }
+  ]
+});
 
-interface PopulatedProduct {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  imageUrl: string;
-}
-
-export interface IOrder {
-  _id?: mongoose.Types.ObjectId;
-  userId: mongoose.Types.ObjectId | PopulatedUser;
-  productId: mongoose.Types.ObjectId | PopulatedProduct;
-  razorpayOrderId: string;
-  razorpayPaymentId?: string;
-  amount: number;
-  status: "pending" | "completed" | "failed";
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-const orderSchema = new Schema<IOrder>(
-  {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    productId: { type: Schema.Types.ObjectId, ref: "Product", required: true },
-    razorpayOrderId: { type: String, required: true },
-    razorpayPaymentId: { type: String },
-    amount: { type: Number, required: true },
-    status: {
-      type: String,
-      required: true,
-      enum: ["pending", "completed", "failed"],
-      default: "pending",
-    },
-  },
-  { timestamps: true }
-);
-
-const Order = models?.Order || model<IOrder>("Order", orderSchema);
-export default Order;
+export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

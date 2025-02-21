@@ -15,7 +15,7 @@ const SubNav = () => {
       <div className='w-full container mx-auto px-2 xl:px-0 flex justify-between items-center'>
 
       <NavButton href="/" active={pathname === '/'} icon={<FaHome />}>Home</NavButton>
-      <NavButton href="/news" active={pathname === '/latestnews'}icon={<FaNewspaper />}>Latest News</NavButton>
+      <NavButton href="/news" active={pathname === '/news'}icon={<FaNewspaper />}>Latest News</NavButton>
       <NavButton href="/transfermarket" active={pathname === '/transfermarket'} icon={<FaExchangeAlt />}>Transfer Market</NavButton>
       <NavButton href="/seriesA" active={pathname === '/seriesA'} icon={<FaGlobe />}>Series A</NavButton>
       <DropdownMenu title="International Teams" options={['Premier League', 'La Liga', 'Bundesliga', 'Ligue 1', 'Other International Competitions']} linkPrefix="/internationsteams" />

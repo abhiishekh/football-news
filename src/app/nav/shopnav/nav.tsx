@@ -12,7 +12,7 @@ const Nav = () => {
             <div className='w-full text-sm lg:w-[800px] flex justify-between'>
                 <NavButton href='/shop' active={pathname === '/shop'} icon={<FaHome />}>Home</NavButton>
                 <NavButton href='/shop/2024/2025jerseys' active={pathname === '/shop'}>2024/2025jersey</NavButton>
-                <NavButton href='/SeriesA/international' active={pathname === '/shop'}>SeriesA/international</NavButton>
+                <NavButton href='/shop/SeriesA/international' active={pathname === '/shop'}>SeriesA/international</NavButton>
             </div>
         </div>
     </div>

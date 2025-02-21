@@ -1,10 +1,9 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-// import data from '@/app/data/productdata';
-import ProductCard from '@/app/(components)/productCard/page';
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
-import Link from 'next/link';
-import axios from 'axios';
+"use client";
+import React, { useEffect, useState } from "react";
+import ProductCard from "@/app/(components)/productCard/page";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import axios from "axios";
+import { useSearch } from "@/app/context/searchContext";
 
 interface Product {
   _id: string;
@@ -15,25 +14,21 @@ interface Product {
   gender: string;
   child: string;
   category: string;
+  tshirtType: string;
   size: string;
   stocks: number;
-  images: string[]; 
+  images: string[];
 }
 
 const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-    const [products, setProducts] = useState<Product[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-  const productsPerPage = 8; 
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const { searchQuery, filters } = useSearch(); // Get search query and filters
 
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const productsPerPage = 8;
 
-  const paginate = (pageNumber: React.SetStateAction<number | any>) => setCurrentPage(pageNumber);
-
-  const totalPages = Math.ceil(products.length / productsPerPage);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -49,98 +44,77 @@ const ProductPage = () => {
 
     fetchProducts();
   }, []);
-  const generatePagination = () => {
-    const pages = [];
 
-    if (currentPage > 2) {
-      pages.push(1); 
-    }
-    if (currentPage > 3) {
-      pages.push("...");
-    }
+  // Filter products based on search query and filters
+  const filteredProducts = products.filter((product) => {
+    const matchesSearchQuery =
+      searchQuery === "" ||
+      product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-    if (currentPage - 1 > 1 && currentPage + 1 < totalPages) {
-      pages.push(currentPage - 1);
-    }
+    const matchesGender = filters.gender.length === 0 || filters.gender.includes(product.gender);
+    const matchesChild = filters.child.length === 0 || filters.child.includes(product.child);
+    const matchesCategory = filters.category.length === 0 || filters.category.includes(product.category);
+    const matchesTshirtType = filters.tshirtType.length === 0 || filters.tshirtType.includes(product.tshirtType);
 
-    pages.push(currentPage);
+    return matchesSearchQuery && matchesGender && matchesChild && matchesCategory && matchesTshirtType;
+  });
 
-    if (currentPage < totalPages - 1) {
-      pages.push(currentPage + 1);
-    }
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
-    if (currentPage < totalPages - 2) {
-      pages.push("...");
-    }
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
-    if (totalPages > 1) {
-      pages.push(totalPages);
-    }
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    return pages;
-  };
-
-
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
+  if (isLoading) return <div className="text-center text-xl">Loading...</div>;
+  if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className='w-full min-h-screen flex flex-col items-center'>
-      <div className='w-full min-h-screen flex gap-6 flex-wrap justify-center py-6'>
-        {currentProducts.map((item, index) => (
-          <div key={index} className='w-full sm:w-60'>
-            
-            <ProductCard
-              productId={item._id}
-              images={item.images}
-              title={item.title}
-              category={item.category}
-              price={item.price}
-            />
-          </div>
-        ))}
+    <div className="w-full flex flex-col items-center justify-between my-3">
+      {/* Product Grid */}
+      <div className="w-full grid grid-cols-2 sm:grid-cols-2 md:flex md:flex-wrap md:justify-center gap-6 py-6">
+        {currentProducts.length > 0 ? (
+          currentProducts.map((item) => (
+            <div key={item._id} className="w-full sm:w-auto md:w-60 h-fit">
+              <ProductCard
+                productId={item._id}
+                images={item.images}
+                title={item.title}
+                category={item.category}
+                price={item.price}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="text-xl text-gray-500">No products found.</div>
+        )}
       </div>
 
-      <div className='flex justify-center items-center space-x-3 mt-6'>
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className='px-3 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300'
-        >
-          <FaAngleLeft />
-        </button>
-
-        {generatePagination().map((page, index) => (
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex items-center gap-4 my-6">
           <button
-            key={index}
-            onClick={() => page !== "..." && paginate(page)}
-            className={`px-4 py-2 rounded-md ${
-              page === currentPage
-                ? 'bg-blue-500 text-white'
-                : page === "..."
-                ? 'bg-gray-200 text-gray-700'
-                : 'bg-gray-200 text-gray-700'
-            }`}
+            className="p-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
           >
-            {page}
+            <FaAngleLeft />
           </button>
-        ))}
-
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className='px-3 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300'
-        >
-          <FaAngleRight />
-        </button>
-      </div>
+          <span className="text-lg font-semibold">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="p-2 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <FaAngleRight />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

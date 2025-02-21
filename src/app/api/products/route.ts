@@ -9,17 +9,18 @@ export async function POST(req: NextRequest) {
 
   
   try {
-    const { title, description, images, price, category, gender, child, stocks, size } = await req.json();
+    const { title, description, images, price, tshirtType, category, gender, child, stocks, size } = await req.json();
     if (!images || images.length === 0) {
       return NextResponse.json({ error: "At least one image is required" });
     }
-
+console.log("data fetched and listed :", title,description,images,price,category,"type is : ", tshirtType,size,stocks)
     // Create the new product
     const newProduct = new ProductModal({
       title,
       description,
       images,
       price,
+      tshirtType,
       category,
       gender,
       child,
@@ -37,26 +38,32 @@ export async function POST(req: NextRequest) {
   }
 }
 // get response for all the products 
-export async function GET() {
-  // Connect to the database
+export async function GET(req: Request) {
   await dbConnect();
 
-  try {
-    // Fetch all products from the database
-    const products = await ProductModal.find();
+  const url = new URL(req.url);
+  const gender = url.searchParams.getAll("gender");
+  const child = url.searchParams.getAll("child");
+  const category = url.searchParams.getAll("category");
+  const tshirtType = url.searchParams.getAll("tshirtType");
 
-    if (!products || products.length === 0) {
-      // If no products found, return a 404 response
+  try {
+    const query: any = {};
+
+    if (gender.length) query.gender = { $in: gender };
+    if (child.length) query.child = { $in: child };
+    if (category.length) query.category = { $in: category };
+    if (tshirtType.length) query.tshirtType = { $in: tshirtType };
+
+    const products = await ProductModal.find(query);
+
+    if (!products.length) {
       return NextResponse.json({ message: "No products found" }, { status: 404 });
     }
 
-    // Return the list of products with a 200 status code (success)
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
-    // Log the error for debugging purposes
     console.error("Error fetching products:", error);
-
-    // Return an internal server error response if something goes wrong
     return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
   }
 }

@@ -6,9 +6,11 @@ import { IoCartOutline } from "react-icons/io5";
 import Link from "next/link";
 import { useAuth } from "@/app/context/AuthContext";
 import { useCart } from "@/app/context/CartContext";
+import { useSearch } from "@/app/context/searchContext";
 
 const ShopNav = () => {
   const { cart } = useAuth()
+  const { setSearchQuery } = useSearch();
   return (
     <div>
       <div className="w-full h-full container flex justify-between py-2 sm:py-5 items-center mx-auto mt-16 sm:mt-0 px-2  ">
@@ -19,6 +21,7 @@ const ShopNav = () => {
           <input
             type="text"
             placeholder="search here..."
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="text-[#747474] p-2 bg-transparent sm:pl-5 rounded-full border border-[#747474]w-[150px] sm:w-[300px] focus:outline-none bg-white"
           />
           {/* Search Button */}

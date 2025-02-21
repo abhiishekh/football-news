@@ -99,7 +99,7 @@ const ProductCard = ({ images, title, price, category, productId }: DATA) => {
   return (
     <div>
       <div className="w-full h-auto rounded-lg overflow-hidden bg-white">
-        <div className="h-64 w-full">
+        <div className="h-40 sm:h-64 w-full">
           <Link href={`/shop/productdetails/${productId}`}>
             <img
               src={imageUrl}

@@ -1,283 +1,127 @@
-
 "use client"
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Product from "./product/page";
+import AddproductDialog from "@/app/(components)/AddproductDialog/page";
+import Orders from "./orders/page";
+import Users from "./users/page";
+import Revenue from "./revenue/page";
 
 export default function AdminPage() {
-  // Set up state for form fields
-  const [formData, setFormData] = useState<{
-    title: string;
-    description: string;
-    price: string;
-    gender: string;
-    child: string;
-    category: string;
-    size: string;
-    stocks: string;
-    images: File[]; // Ensure images is of type File[]
-  }>({
-    title: "",
-    description: "",
-    price: "",
-    gender: "",
-    child: "",
-    category: "",
-    size: "",
-    stocks: "",
-    images: [], // Initialize as an empty array
-  });
-  // State for loading and error handling
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [usersCount, setUsersCount] = useState(0);
+  const [ordersCount, setOrdersCount] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [activeTab, setActiveTab] = useState<string>("product");
 
-  // Handle changes in input fields
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  useEffect(() => {
+    fetchUsersCount();
+    fetchOrdersData();
+  }, []);
 
-  // Handle file selection for images
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      setFormData({
-        ...formData,
-        images: Array.from(files), 
-      });
-    }
-  };
-
-  // Handle select value change for select components
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-  
-    setIsLoading(true); // Set loading to true when the form is submitting
-    setError(null); // Reset error message before submission
-  
-    console.log("Form data being sent:", formData);  // Log form data before sending
-  
-    // Upload images to Cloudinary first
-    const uploadedImages = await uploadImagesToCloudinary(formData.images);
-    if (!uploadedImages) {
-      setError("Image upload failed");
-      setIsLoading(false);
-      return;
-    }
-    console.log(uploadedImages)
-  
-    // Now prepare the data to be sent to the API
-    const productData = { 
-      ...formData, 
-      images: uploadedImages,  // Attach the array of image URLs here
-    };
-  
-    // Send POST request to the server using axios
+  const fetchUsersCount = async () => {
     try {
-      const response = await axios.post("/api/products", productData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      // console.log("Server response:", response);  // Log response from the server
-  
-      if (response.status === 201) {
-        alert("Product added successfully");
-        setFormData({
-          title: "",
-          description: "",
-          price: "",
-          gender: "",
-          child: "",
-          category: "",
-          size: "",
-          stocks: "",
-          images: [], // Clear image field
-        });
-      } else {
-        setError("Failed to add product");
-      }
+      const response = await axios.get("/api/users");
+      setUsersCount(response.data.users.length);
     } catch (error) {
-      console.error("Error adding product", error);
-      setError("Error adding product");
-    } finally {
-      setIsLoading(false);
+      console.error("Error fetching users count", error);
     }
   };
-  
 
-  // Function to handle image upload to Cloudinary
-  const uploadImagesToCloudinary = async (files: File[]) => {
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dhac6t2n1/image/upload";
-    const uploadPreset = "football-ecommerce"; // Cloudinary upload preset
-
+  const fetchOrdersData = async () => {
     try {
-      const imageUrls = [];
-      for (const file of files) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", uploadPreset);
+      const response = await axios.get("/api/orders/allorders")
+      const totalOrders = response.data.reduce((count: any, item: { orders: string | any[]; }) => count + item.orders.length, 0);
+      console.log("Total Number of Orders:", totalOrders);
+      
+      setOrdersCount(totalOrders);
 
-        // Send the file to Cloudinary
-        const res = await axios.post(cloudinaryUrl, formData);
-        if (res.data.secure_url) {
-          imageUrls.push(res.data.secure_url); // Add the image URL to the array
-        }
-      }
-      return imageUrls; // Return the array of image URLs
+      const revenue = response.data.reduce((sum: number, order: any) => {
+        return sum + order.orders.reduce((orderSum: number, item: any) => {
+          return orderSum + (item.price || 0) * (item.quantity || 1);
+        }, 0);
+      }, 0);
+      
+      setTotalRevenue(revenue);
+      console.log("Total Revenue:", revenue);
+      
     } catch (error) {
-      console.error("Error uploading images to Cloudinary", error);
-      return null;
+      console.error("Error fetching orders data", error);
     }
   };
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-white to-blue-300">
       <div className="container px-2 mt-12 sm:mt-0 min-h-screen w-full md:w-[1100px] mx-auto py-10">
-        <h1 className="font-bold text-3xl text-black">Admin page</h1>
-        {/* //top */}
-        <div className="w-full flex flex-wrap justify-between items-center gap-4 my-12">
-          <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Products</h1>
-          <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Orders</h1>
-          <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Revenue</h1>
-          <h1 className="py-4 px-8 rounded-lg bg-gray-100 text-black font-bold text-xl">Users</h1>
+        <h1 className="font-bold text-3xl text-black text-center">Admin Page</h1>
+
+        {/* Dashboard Tabs */}
+        <div className="w-full flex flex-wrap sm:justify-between items-center gap-2 sm:gap-4 my-12">
+          <h1
+            onClick={() => setActiveTab("product")}
+            className={`py-2 sm:py-4 px-8 rounded-lg font-bold border border-orange-500 text-sm sm:text-xl cursor-pointer ${
+              activeTab === "product" ? "bg-blue-500 text-white" : "bg-gray-100 text-black"
+            }`}
+          >
+            Products
+          </h1>
+
+          <h1
+            onClick={() => setActiveTab("orders")}
+            className={`py-2 sm:py-4 px-8 rounded-lg font-bold border border-orange-500 text-sm sm:text-xl cursor-pointer ${
+              activeTab === "orders" ? "bg-blue-500 text-white" : "bg-gray-100 text-black"
+            }`}
+          >
+            Orders: {ordersCount}
+          </h1>
+
+          <h1
+            onClick={() => setActiveTab("revenue")}
+            className={`py-2 sm:py-4 px-8 rounded-lg font-bold border border-orange-500 text-sm sm:text-xl cursor-pointer ${
+              activeTab === "revenue" ? "bg-blue-500 text-white" : "bg-gray-100 text-black"
+            }`}
+          >
+            Revenue: ${totalRevenue.toFixed(2)}
+          </h1>
+
+          <h1
+            onClick={() => setActiveTab("users")}
+            className={`py-2 sm:py-4 px-8 rounded-lg font-bold border border-orange-500 text-sm sm:text-xl cursor-pointer ${
+              activeTab === "users" ? "bg-blue-500 text-white" : "bg-gray-100 text-black"
+            }`}
+          >
+            Users: {usersCount}
+          </h1>
         </div>
 
-        <Dialog>
-          <DialogTrigger className="w-fit mb-12 py-2 px-4 bg-orange-400 rounded-lg text-xl font-semibold hover:bg-orange-400/90 t">
-            Add a Product
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle className="my-5 text-xl">Add Product Information</DialogTitle>
-              <DialogDescription>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                  <Input
-                    type="text"
-                    name="title"
-                    placeholder="Title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Textarea
-                    name="description"
-                    placeholder="Description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Input
-                    type="number"
-                    name="price"
-                    placeholder="Price"
-                    value={formData.price}
-                    onChange={handleChange}
-                    required
-                  />
-                  <div className="w-full flex justify-between gap-4 flex-wrap">
-                    <Select
-                      value={formData.gender}
-                      onValueChange={(value) => handleSelectChange("gender", value)}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Gender" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                        <SelectItem value="trans-gender">Trans-gender</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      value={formData.child}
-                      onValueChange={(value) => handleSelectChange("child", value)}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Child" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="boy">Boy</SelectItem>
-                        <SelectItem value="girl">Girl</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      value={formData.category}
-                      onValueChange={(value) => handleSelectChange("category", value)}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="series-A">Series A</SelectItem>
-                        <SelectItem value="international">International</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      value={formData.size}
-                      onValueChange={(value) => handleSelectChange("size", value)}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Size" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="xs">XS</SelectItem>
-                        <SelectItem value="s">S</SelectItem>
-                        <SelectItem value="m">M</SelectItem>
-                        <SelectItem value="l">L</SelectItem>
-                        <SelectItem value="xl">XL</SelectItem>
-                        <SelectItem value="2xl">2XL</SelectItem>
-                        <SelectItem value="3xl">3XL</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Input
-                    type="number"
-                    name="stocks"
-                    placeholder="Stocks"
-                    value={formData.stocks}
-                    onChange={handleChange}
-                    required
-                  />
-                  <input
-                    type="file"
-                    name="images"
-                    multiple
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    required
-                  
-                  />
-                  <Button type="submit" disabled={isLoading}>
-                    {isLoading ? "Submitting..." : "Submit"}
-                  </Button>
-                  {error && <div className="text-red-500 mt-2">{error}</div>}
-                </form>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+        <AddproductDialog />
 
-        <h1 className="text-3xl text-center">All Products </h1>
-        <Product/>
+        {/* Conditional Rendering Based on Active Tab */}
+        <div className="mt-8">
+          {activeTab === "product" && (
+            <>
+              <h1 className="text-3xl text-center">All Products</h1>
+              <Product />
+            </>
+          )}
+
+          {activeTab === "orders" && (
+            <div >
+            <div><Orders/></div>
+            </div>
+          )}
+
+          {activeTab === "revenue" && (
+           <div>
+            <Revenue/>
+           </div>
+          )}
+
+          {activeTab === "users" && (
+            <div>
+              <Users/>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

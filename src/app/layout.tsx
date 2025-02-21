@@ -5,7 +5,7 @@ import Nav from "./nav/page";
 import Footer from "./footer/page";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
-
+import { SearchProvider } from "./context/searchContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,13 +35,15 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <AuthProvider>
-  
+        <SearchProvider>
+
           <CartProvider>
 
         <Nav/>
         {children}
         <Footer/>
           </CartProvider>
+        </SearchProvider>
       
         </AuthProvider>
       </body>

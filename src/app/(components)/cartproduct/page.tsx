@@ -38,7 +38,7 @@ const CartProduct = ({
   return (
     <div className="flex justify-between items-center py-4 border-b">
       <div className="flex gap-3 items-center">
-        <img src={imageUrl} alt={title} className="w-20 h-20 object-cover" />
+        <img src={imageUrl[0]} alt={title} className="w-20 h-20 object-cover" />
         <div>
           <p className="font-semibold">{title}</p>
           <div className="flex gap-2 items-center">
